@@ -280,6 +280,16 @@ function savePalette(e) {
       const text = colorDivs[index].children[0];
       checkTextContrast(color, text);
       updateTextUI(index);
+
+      // is this need when we save a palette?
+      // const c = chroma(color);
+      // const sliders = sliderContainers[index].querySelectorAll(
+      //   "input[type='range']"
+      // );
+      // const hue = sliders[0];
+      // const brightness = sliders[1];
+      // const saturation = sliders[2];
+      // colorizeSliders(c, hue, brightness, saturation);
     });
     resetInputs();
   });
@@ -350,6 +360,15 @@ function getLocal() {
           const text = colorDivs[index].children[0];
           checkTextContrast(color, text);
           updateTextUI(index);
+
+          const c = chroma(color);
+          const sliders = sliderContainers[index].querySelectorAll(
+            "input[type='range']"
+          );
+          const hue = sliders[0];
+          const brightness = sliders[1];
+          const saturation = sliders[2];
+          colorizeSliders(c, hue, brightness, saturation);
         });
         resetInputs();
       });
