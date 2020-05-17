@@ -15,13 +15,22 @@ i,
 svg {
   pointer-events: none;
 }
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+}
+header h1 {
+  font-family: "Balsamiq Sans", cursive;
+}
 .colors {
-  min-height: 80vh;
+  min-height: 70vh;
   display: flex;
   color: rgb(212, 212, 212);
 }
 .color {
-  height: 80vh;
+  min-height: 100%;
   display: flex;
   flex: 1;
   flex-direction: column;
