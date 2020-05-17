@@ -186,3 +186,6 @@ input[type="range"] {
   color: white;
   cursor: pointer;
 }
+.submit-save:hover {
+  background: rgb(48, 48, 76);
+}
