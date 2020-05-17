@@ -34,7 +34,7 @@ header h1 {
   flex: 1;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
   position: relative;
   overflow: hidden;
 }
@@ -242,4 +242,32 @@ input[type="range"] {
     display: flex;
     flex-direction: column;
   }
+}
+
+.copy-tool-tip-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease-out;
+  transition-property: opacity, margin-top;
+  border-radius: 0.5rem;
+  margin-top: 0rem;
+}
+
+.copy-tool-tip-container.active {
+  opacity: 1;
+  margin-top: 0.5rem;
+}
+
+.copy-tool-tip {
+  border: 2px solid black;
+  border-radius: 0.6rem;
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
 }

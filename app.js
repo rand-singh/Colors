@@ -8,6 +8,7 @@ const adjustButtons = document.querySelectorAll(".adjust");
 const lockButtons = document.querySelectorAll(".lock");
 const closeAdjustments = document.querySelectorAll(".close-adjustment");
 const sliderContainers = document.querySelectorAll(".sliders");
+const copyToolTip = document.querySelector(".copy-tool-tip-container");
 let initialColors;
 // for local storage
 let savedPalettes = [];
@@ -27,10 +28,8 @@ currentHexes.forEach((hex) => {
     copytoClipboard(hex);
   });
 });
-popup.addEventListener("transitionend", () => {
-  const popupBox = popup.children[0];
-  popup.classList.remove("active");
-  popupBox.classList.remove("active");
+copyToolTip.addEventListener("transitionend", () => {
+  copyToolTip.classList.remove("active");
 });
 adjustButtons.forEach((button, index) => {
   button.addEventListener("click", () => {
@@ -183,10 +182,18 @@ function copytoClipboard(hex) {
   el.select();
   document.execCommand("copy");
   document.body.removeChild(el);
+
   // pop up animation
-  const popupBox = popup.children[0];
-  popup.classList.add("active");
-  popupBox.classList.add("active");
+  const bottom = hex.getBoundingClientRect().bottom;
+  const left = hex.getBoundingClientRect().left;
+  const hexWidth = hex.clientWidth;
+  const copyToolTipWidth = copyToolTip.clientWidth;
+  const amount = (copyToolTipWidth - hexWidth) / 2;
+  const actual = left - amount;
+
+  copyToolTip.style.top = `${bottom}px`;
+  copyToolTip.style.left = `${actual}px`;
+  copyToolTip.classList.add("active");
 }
 function openAdjustmentPanel(index) {
   sliderContainers[index].classList.toggle("active");
