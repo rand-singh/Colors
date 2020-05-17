@@ -211,16 +211,26 @@ const libraryBtn = document.querySelector(".library");
 const closeLibraryBtn = document.querySelector(".close-library");
 
 // event listeners
-saveBtn.addEventListener("click", openPalette);
+saveBtn.addEventListener("click", openPalette); // function name is confusing
 closeSave.addEventListener("click", closePalette);
 submitSave.addEventListener("click", savePalette);
 libraryBtn.addEventListener("click", openLibrary);
 closeLibraryBtn.addEventListener("click", closeLibrary);
+saveInput.addEventListener("input", (e) => {
+  if (e.target.value === "") {
+    console.log("add error class");
+    e.target.classList.add("error");
+  } else {
+    e.target.classList.remove("error");
+  }
+});
 
+// function name is confusing
 function openPalette() {
   const popup = saveContainer.children[0];
   saveContainer.classList.add("active");
   popup.classList.add("active");
+  saveInput.focus();
 }
 function closePalette() {
   const popup = saveContainer.children[0];
@@ -228,9 +238,17 @@ function closePalette() {
   popup.classList.remove("active");
 }
 function savePalette(e) {
+  const name = saveInput.value;
+
+  if (name === "") {
+    console.error("enter palette name");
+    saveInput.focus();
+    saveInput.classList.add("error");
+    return;
+  }
+
   saveContainer.classList.remove("active");
   popup.classList.remove("active");
-  const name = saveInput.value;
   const colors = [];
   currentHexes.forEach((hex) => {
     colors.push(hex.innerText);

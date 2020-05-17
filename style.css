@@ -181,6 +181,9 @@ input[type="range"] {
   font-size: 1.5rem;
   padding: 1rem;
 }
+.save-name.error {
+  border: 2px solid red;
+}
 .close-save,
 .close-library {
   padding: 1rem;
