@@ -46,6 +46,7 @@ lockButtons.forEach((button, index) => {
     lockColor(button, index);
   });
 });
+
 // functions
 // color generator
 function generateHex() {
@@ -407,5 +408,121 @@ function getLocal() {
   }
 }
 
+// app start
 getLocal();
 randomColors();
+(function () {
+  sessionStorage.removeItem("palettes-history");
+})();
+
+// observer for back/undo feature
+const backSection = document.querySelector(".back-section");
+const backButton = document.querySelector(".back");
+
+backButton.addEventListener("click", () => {
+  if (sessionStorage.getItem("palettes-history") === null) {
+    console.error("no history found, button should be disabled");
+  } else {
+    observer.disconnect();
+    console.log("history found, restore");
+
+    const palettesHist = JSON.parse(sessionStorage.getItem("palettes-history"));
+    const lastPalette = palettesHist.length - 1;
+    console.log(palettesHist);
+
+    palettesHist[lastPalette].forEach((hex, index) => {
+      console.log(hex, index);
+
+      colorDivs[index].style.backgroundColor = hex;
+      const text = colorDivs[index].children[0];
+      checkTextContrast(hex, text);
+      updateTextUI(index);
+
+      const c = chroma(hex);
+      const sliders = sliderContainers[index].querySelectorAll(
+        "input[type='range']"
+      );
+      const hue = sliders[0];
+      const brightness = sliders[1];
+      const saturation = sliders[2];
+      colorizeSliders(c, hue, brightness, saturation);
+    });
+    resetInputs();
+
+    palettesHist.pop();
+
+    console.log(JSON.parse(sessionStorage.getItem("palettes-history")).length);
+    if (palettesHist.length === 0) {
+      console.log("disable back button");
+      backSection.classList.remove("active");
+    }
+
+    console.log("popped ", palettesHist);
+    saveToSession(palettesHist, true);
+    // console.log("save to session", palettesHist);
+  }
+});
+
+const config = {
+  attributes: false,
+  childList: true,
+  subtree: false,
+};
+
+const callback = function (mutationsList, observer) {
+  console.log("mutation occured", mutationsList);
+  backButton.parentElement.classList.add("active");
+
+  if (mutationsList.length === 5) {
+    let changedColors = [];
+
+    mutationsList.forEach((mutation) => {
+      changedColors.push(mutation.removedNodes[0].textContent);
+    });
+
+    saveToSession(changedColors);
+  } else {
+    // only one has changed, which one
+    const whichOne = mutationsList[0].target.getAttribute("data-hex");
+    const oldHex = mutationsList[0].removedNodes[0].textContent;
+    let changedColors = [];
+    currentHexes.forEach((hex) => {
+      changedColors.push(hex.innerText);
+    });
+
+    changedColors[whichOne] = oldHex;
+
+    saveToSession(changedColors);
+  }
+};
+
+// Create an observer instance linked to the callback function
+const observer = new MutationObserver(callback);
+
+currentHexes.forEach((hex) => {
+  // Start observing the target node for configured mutations
+  observer.observe(hex, config);
+});
+
+function saveToSession(newHex, override = false) {
+  console.log("override", override, newHex);
+  let sessionPalettes = [];
+
+  if (override === true) {
+    console.log("OVERRIDE");
+    sessionStorage.setItem("palettes-history", JSON.stringify(newHex));
+    currentHexes.forEach((hex) => {
+      // Start observing the target node for configured mutations
+      observer.observe(hex, config);
+    });
+    // return;
+  } else {
+    if (sessionStorage.getItem("palettes-history") === null) {
+      sessionPalettes = [];
+    } else {
+      sessionPalettes = JSON.parse(sessionStorage.getItem("palettes-history"));
+    }
+    sessionPalettes.push(newHex);
+    sessionStorage.setItem("palettes-history", JSON.stringify(sessionPalettes));
+  }
+}
