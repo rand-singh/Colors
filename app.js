@@ -51,6 +51,12 @@ lockButtons.forEach((button, index) => {
   });
 });
 
+document.body.onkeyup = function (e) {
+  if (e.keyCode == 32) {
+    randomColors();
+  }
+};
+
 // functions
 // color generator
 function generateHex() {
@@ -228,6 +234,7 @@ closeSave.addEventListener("click", closePalette);
 submitSave.addEventListener("click", savePalette);
 libraryBtn.addEventListener("click", openLibrary);
 closeLibraryBtn.addEventListener("click", closeLibrary);
+
 saveInput.addEventListener("input", (e) => {
   if (e.target.value === "") {
     console.log("add error class");
