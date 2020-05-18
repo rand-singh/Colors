@@ -42,7 +42,7 @@ adjustButtons.forEach((button, index) => {
 });
 closeAdjustments.forEach((button, index) => {
   button.addEventListener("click", () => {
-    cloaseAdjustmentPanel(index);
+    closeAdjustmentPanel(index);
   });
 });
 lockButtons.forEach((button, index) => {
@@ -209,7 +209,7 @@ function copytoClipboard(hex) {
 function openAdjustmentPanel(index) {
   sliderContainers[index].classList.toggle("active");
 }
-function cloaseAdjustmentPanel(index) {
+function closeAdjustmentPanel(index) {
   sliderContainers[index].classList.remove("active");
 }
 function lockColor(button, index) {
@@ -579,6 +579,9 @@ const exitZen = document.querySelector(".exit-zen");
 
 activateZen.addEventListener("click", () => {
   document.body.classList.add("zen");
+  sliderContainers.forEach((adjPanel, index) => {
+    closeAdjustmentPanel(index);
+  });
 });
 
 exitZen.addEventListener("click", () => {

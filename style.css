@@ -349,6 +349,7 @@ input[type="range"] {
   right: 0;
   margin-left: auto;
   margin-right: auto;
+  width: 6rem;
   font-size: 2rem;
   border: none;
   background: none;
