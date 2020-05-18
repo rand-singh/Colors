@@ -52,7 +52,7 @@ lockButtons.forEach((button, index) => {
 });
 
 document.body.onkeyup = function (e) {
-  if (e.keyCode == 32) {
+  if (e.keyCode == 32 && !document.body.classList.contains("modal-active")) {
     randomColors();
   }
 };
@@ -256,6 +256,7 @@ function openPalette() {
   saveContainer.classList.add("active");
   popup.classList.add("active");
   saveInput.focus();
+  document.body.classList.add("modal-active");
 }
 
 function closePalette() {
@@ -263,6 +264,7 @@ function closePalette() {
   saveContainer.classList.remove("active");
   popup.classList.remove("active");
   saveInput.value = "";
+  document.body.classList.remove("modal-active");
 }
 
 function savePalette(e) {
@@ -346,6 +348,8 @@ function savePalette(e) {
   palette.appendChild(paletteBtn);
   libraryContainer.children[0].appendChild(palette);
   updateLibraryCount();
+
+  document.body.classList.remove("modal-active");
 }
 
 function saveToLocal(paletteObj) {
@@ -363,12 +367,14 @@ function openLibrary() {
   const popup = libraryContainer.children[0];
   libraryContainer.classList.add("active");
   popup.classList.add("active");
+  document.body.classList.add("modal-active");
 }
 
 function closeLibrary() {
   const popup = libraryContainer.children[0];
   libraryContainer.classList.remove("active");
   popup.classList.remove("active");
+  document.body.classList.remove("modal-active");
 }
 
 function getLocal() {
@@ -439,6 +445,7 @@ randomColors();
 // observer for back/undo feature
 const backSection = document.querySelector(".back-section");
 const backButton = document.querySelector(".back");
+const historyCount = document.querySelector(".history-count");
 
 backButton.addEventListener("click", () => {
   if (sessionStorage.getItem("palettes-history") === null) {
@@ -473,6 +480,7 @@ backButton.addEventListener("click", () => {
     }
 
     saveToSession(palettesHist, true);
+    updateHistoryCount();
   }
 });
 
@@ -483,8 +491,6 @@ const config = {
 };
 
 const callback = function (mutationsList, observer) {
-  backButton.parentElement.classList.add("active");
-
   if (mutationsList.length === 5) {
     let changedColors = [];
 
@@ -505,6 +511,8 @@ const callback = function (mutationsList, observer) {
     changedColors[whichOne] = oldHex;
     saveToSession(changedColors);
   }
+
+  backButton.parentElement.classList.add("active");
 };
 
 // Create an observer instance linked to the callback function
@@ -533,6 +541,7 @@ function saveToSession(newHex, override = false) {
     sessionPalettes.push(newHex);
     sessionStorage.setItem("palettes-history", JSON.stringify(sessionPalettes));
   }
+  updateHistoryCount();
 }
 
 // palette count markers
@@ -540,10 +549,26 @@ const libraryCount = document.querySelector(".palettes-saved");
 
 function updateLibraryCount() {
   if (localStorage.getItem("palettes") !== null) {
-    nrPalettesInLibrary = JSON.parse(localStorage.getItem("palettes")).length;
+    let nrPalettesInLibrary = JSON.parse(localStorage.getItem("palettes"))
+      .length;
     libraryCount.innerText = nrPalettesInLibrary;
     libraryCount.classList.add("visible");
   }
 }
 
 updateLibraryCount();
+
+function updateHistoryCount() {
+  if (sessionStorage.getItem("palettes-history") !== null) {
+    let nrPalettesInHistory = JSON.parse(
+      sessionStorage.getItem("palettes-history")
+    ).length;
+    historyCount.innerText = nrPalettesInHistory;
+    historyCount.classList.add("visible");
+    if (nrPalettesInHistory === 0) {
+      historyCount.classList.remove("visible");
+    }
+  } else {
+    historyCount.classList.remove("visible");
+  }
+}

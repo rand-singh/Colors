@@ -118,6 +118,7 @@ header h1 {
 .back-section {
   opacity: 0.3;
   pointer-events: none;
+  position: relative;
 }
 .back-section.active {
   opacity: 1;
@@ -271,8 +272,8 @@ input[type="range"] {
 }
 
 .copy-tool-tip-container.active {
-  -webkit-animation: notification 2.5s forwards;
-  animation: notification 2.5s forwards;
+  -webkit-animation: notification 2s forwards;
+  animation: notification 2s forwards;
 }
 
 .copy-tool-tip {
@@ -303,7 +304,7 @@ input[type="range"] {
   position: relative;
 }
 
-.palettes-saved {
+.item-count {
   opacity: 0;
   position: absolute;
   top: 10px;
@@ -315,6 +316,7 @@ input[type="range"] {
   font-family: sans-serif;
 }
 
-.palettes-saved.visible {
+.palettes-saved.visible,
+.history-count.visible {
   opacity: 1;
 }
