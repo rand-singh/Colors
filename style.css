@@ -9,6 +9,7 @@ body {
 }
 button {
   font-family: "Muli", sans-serif;
+  outline: none;
 }
 path,
 i,
@@ -25,9 +26,8 @@ header h1 {
   font-family: "Balsamiq Sans", cursive;
 }
 .colors {
-  min-height: 70vh;
+  min-height: 75vh;
   display: flex;
-  color: rgb(212, 212, 212);
 }
 .color {
   display: flex;
@@ -86,7 +86,7 @@ header h1 {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  height: 20vh;
+  height: 15vh;
 }
 .panel button {
   font-size: 1.2rem;
@@ -110,6 +110,7 @@ header h1 {
 .generate-panel {
   display: flex;
   align-items: center;
+  -webkit-user-select: none;
 }
 .generate-panel .section {
   text-align: center;
@@ -263,15 +264,15 @@ input[type="range"] {
   left: 0;
   opacity: 0;
   pointer-events: none;
-  transition: all 0.4s ease-out;
+  transition: all 4s ease-in-out;
   transition-property: opacity, margin-top;
   border-radius: 0.5rem;
-  margin-top: 0rem;
+  margin-top: 0.5rem;
 }
 
 .copy-tool-tip-container.active {
-  opacity: 1;
-  margin-top: 0.5rem;
+  -webkit-animation: notification 2.5s forwards;
+  animation: notification 2.5s forwards;
 }
 
 .copy-tool-tip {
@@ -283,4 +284,17 @@ input[type="range"] {
   align-items: center;
   justify-content: center;
   background: white;
+}
+
+@keyframes notification {
+  0%,
+  100% {
+    opacity: 0;
+    margin-top: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+    margin-top: 1rem;
+  }
 }

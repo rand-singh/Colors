@@ -15,20 +15,24 @@ let savedPalettes = [];
 
 // add event listeners
 generateButton.addEventListener("click", randomColors);
+
 sliders.forEach((slider) => {
   slider.addEventListener("input", hslControls);
 });
+
 colorDivs.forEach((div, index) => {
   div.addEventListener("change", () => {
     updateTextUI(index);
   });
 });
+
 currentHexes.forEach((hex) => {
   hex.addEventListener("click", () => {
     copytoClipboard(hex);
   });
 });
-copyToolTip.addEventListener("transitionend", () => {
+
+copyToolTip.addEventListener("animationend", () => {
   copyToolTip.classList.remove("active");
 });
 adjustButtons.forEach((button, index) => {
