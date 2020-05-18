@@ -445,15 +445,11 @@ backButton.addEventListener("click", () => {
     console.error("no history found, button should be disabled");
   } else {
     observer.disconnect();
-    console.log("history found, restore");
 
     const palettesHist = JSON.parse(sessionStorage.getItem("palettes-history"));
     const lastPalette = palettesHist.length - 1;
-    console.log(palettesHist);
 
     palettesHist[lastPalette].forEach((hex, index) => {
-      console.log(hex, index);
-
       colorDivs[index].style.backgroundColor = hex;
       const text = colorDivs[index].children[0];
       checkTextContrast(hex, text);
@@ -472,15 +468,11 @@ backButton.addEventListener("click", () => {
 
     palettesHist.pop();
 
-    console.log(JSON.parse(sessionStorage.getItem("palettes-history")).length);
     if (palettesHist.length === 0) {
-      console.log("disable back button");
       backSection.classList.remove("active");
     }
 
-    console.log("popped ", palettesHist);
     saveToSession(palettesHist, true);
-    // console.log("save to session", palettesHist);
   }
 });
 
@@ -491,7 +483,6 @@ const config = {
 };
 
 const callback = function (mutationsList, observer) {
-  console.log("mutation occured", mutationsList);
   backButton.parentElement.classList.add("active");
 
   if (mutationsList.length === 5) {
@@ -512,7 +503,6 @@ const callback = function (mutationsList, observer) {
     });
 
     changedColors[whichOne] = oldHex;
-
     saveToSession(changedColors);
   }
 };
@@ -526,17 +516,14 @@ currentHexes.forEach((hex) => {
 });
 
 function saveToSession(newHex, override = false) {
-  console.log("override", override, newHex);
   let sessionPalettes = [];
 
   if (override === true) {
-    console.log("OVERRIDE");
     sessionStorage.setItem("palettes-history", JSON.stringify(newHex));
     currentHexes.forEach((hex) => {
       // Start observing the target node for configured mutations
       observer.observe(hex, config);
     });
-    // return;
   } else {
     if (sessionStorage.getItem("palettes-history") === null) {
       sessionPalettes = [];
