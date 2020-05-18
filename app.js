@@ -670,3 +670,12 @@ activateZen.addEventListener("click", () => {
 exitZen.addEventListener("click", () => {
   document.body.classList.remove("zen");
 });
+
+// close popups on click outside
+saveContainer.addEventListener("click", (e) => {
+  if (e.target.classList.contains("save-container")) closePalette();
+});
+
+libraryContainer.addEventListener("click", (e) => {
+  if (e.target.classList.contains("library-container")) closeLibrary();
+});
