@@ -257,11 +257,13 @@ function openPalette() {
   popup.classList.add("active");
   saveInput.focus();
 }
+
 function closePalette() {
   const popup = saveContainer.children[0];
   saveContainer.classList.remove("active");
   popup.classList.remove("active");
 }
+
 function savePalette(e) {
   const name = saveInput.value;
 
@@ -342,6 +344,7 @@ function savePalette(e) {
   palette.appendChild(preview);
   palette.appendChild(paletteBtn);
   libraryContainer.children[0].appendChild(palette);
+  updateLibraryCount();
 }
 
 function saveToLocal(paletteObj) {
@@ -543,3 +546,16 @@ function saveToSession(newHex, override = false) {
     sessionStorage.setItem("palettes-history", JSON.stringify(sessionPalettes));
   }
 }
+
+// palette count markers
+const libraryCount = document.querySelector(".palettes-saved");
+
+function updateLibraryCount() {
+  if (localStorage.getItem("palettes") !== null) {
+    nrPalettesInLibrary = JSON.parse(localStorage.getItem("palettes")).length;
+    libraryCount.innerText = nrPalettesInLibrary;
+    libraryCount.classList.add("visible");
+  }
+}
+
+updateLibraryCount();
