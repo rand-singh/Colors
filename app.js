@@ -35,16 +35,19 @@ currentHexes.forEach((hex) => {
 copyToolTip.addEventListener("animationend", () => {
   copyToolTip.classList.remove("active");
 });
+
 adjustButtons.forEach((button, index) => {
   button.addEventListener("click", () => {
     openAdjustmentPanel(index);
   });
 });
+
 closeAdjustments.forEach((button, index) => {
   button.addEventListener("click", () => {
     closeAdjustmentPanel(index);
   });
 });
+
 lockButtons.forEach((button, index) => {
   button.addEventListener("click", () => {
     lockColor(button, index);
@@ -52,8 +55,22 @@ lockButtons.forEach((button, index) => {
 });
 
 document.body.onkeyup = function (e) {
-  if (e.keyCode == 32 && !document.body.classList.contains("modal-active")) {
-    randomColors();
+  if (!document.body.classList.contains("modal-active")) {
+    switch (e.keyCode) {
+      case 32:
+        randomColors();
+        break;
+      case 83:
+        openPalette();
+        break;
+      case 76:
+        openLibrary();
+    }
+  }
+  if (document.body.classList.contains("modal-active") && e.keyCode === 27) {
+    console.log("escape to close popup");
+    closePalette();
+    closeLibrary();
   }
 };
 

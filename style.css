@@ -232,12 +232,12 @@ input[type="range"] {
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
-  padding: 2rem;
+  padding: 0 1.2rem 1.2rem;
 }
 
 .small-preview {
   display: flex;
-  flex: 1;
+  flex: 2;
 }
 .custom-palette h4 {
   flex: 1;
