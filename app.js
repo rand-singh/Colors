@@ -262,6 +262,7 @@ function closePalette() {
   const popup = saveContainer.children[0];
   saveContainer.classList.remove("active");
   popup.classList.remove("active");
+  saveInput.value = "";
 }
 
 function savePalette(e) {
