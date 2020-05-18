@@ -237,10 +237,16 @@ closeLibraryBtn.addEventListener("click", closeLibrary);
 
 saveInput.addEventListener("input", (e) => {
   if (e.target.value === "") {
-    console.log("add error class");
     e.target.classList.add("error");
   } else {
     e.target.classList.remove("error");
+  }
+});
+
+saveInput.addEventListener("keyup", (e) => {
+  if (e.keyCode === 13 && saveInput.value !== "") {
+    savePalette();
+    return;
   }
 });
 
