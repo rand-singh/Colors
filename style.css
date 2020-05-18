@@ -25,6 +25,10 @@ header {
 header h1 {
   font-family: "Balsamiq Sans", cursive;
 }
+.settings {
+  position: absolute;
+  right: 0;
+}
 .colors {
   min-height: 75vh;
   display: flex;
@@ -257,6 +261,10 @@ input[type="range"] {
     display: flex;
     flex-direction: column;
   }
+
+  .settings {
+    display: none;
+  }
 }
 
 .copy-tool-tip-container {
@@ -319,4 +327,57 @@ input[type="range"] {
 .palettes-saved.visible,
 .history-count.visible {
   opacity: 1;
+}
+
+/* ZEN mode */
+.activate-zen {
+  font-size: 1rem;
+  margin-right: 3rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 1rem;
+  text-transform: uppercase;
+  color: #4b4a4f;
+}
+
+.exit-zen {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  z-index: 1;
+  background: white;
+  padding: 0.3rem 2.3rem;
+  box-shadow: rgba(0, 0, 0, 0.11) 0 0 0 1px,
+    rgba(0, 0, 0, 0.05) 0 10px 10px -5px;
+}
+
+.zen .exit-zen {
+  display: block;
+}
+
+.zen header {
+  height: 0vh;
+}
+
+.zen .panel {
+  height: 0vh;
+  display: none;
+}
+
+.zen .colors {
+  height: 100vh;
+}
+
+.zen .color > h2,
+.zen .color > .controls {
+  opacity: 0;
 }

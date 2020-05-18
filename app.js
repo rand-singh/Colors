@@ -572,3 +572,15 @@ function updateHistoryCount() {
     historyCount.classList.remove("visible");
   }
 }
+
+// Zen mode
+const activateZen = document.querySelector(".activate-zen");
+const exitZen = document.querySelector(".exit-zen");
+
+activateZen.addEventListener("click", () => {
+  document.body.classList.add("zen");
+});
+
+exitZen.addEventListener("click", () => {
+  document.body.classList.remove("zen");
+});
