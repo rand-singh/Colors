@@ -6,6 +6,7 @@ const currentHexes = document.querySelectorAll(".color h2");
 const popup = document.querySelector(".copy-container");
 const adjustButtons = document.querySelectorAll(".adjust");
 const lockButtons = document.querySelectorAll(".lock");
+const copyButtons = document.querySelectorAll(".copy");
 const closeAdjustments = document.querySelectorAll(".close-adjustment");
 const sliderContainers = document.querySelectorAll(".sliders");
 const copyToolTip = document.querySelector(".copy-tool-tip-container");
@@ -29,6 +30,12 @@ colorDivs.forEach((div, index) => {
 currentHexes.forEach((hex) => {
   hex.addEventListener("click", () => {
     copytoClipboard(hex);
+  });
+});
+
+copyButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    copytoClipboard(button.parentNode.parentNode.firstElementChild);
   });
 });
 
@@ -115,6 +122,7 @@ function randomColors() {
   adjustButtons.forEach((button, index) => {
     checkTextContrast(initialColors[index], button);
     checkTextContrast(initialColors[index], lockButtons[index]);
+    checkTextContrast(initialColors[index], copyButtons[index]);
   });
 }
 

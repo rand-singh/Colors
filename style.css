@@ -128,6 +128,7 @@ header h1 {
   opacity: 1;
   pointer-events: all;
 }
+.copy,
 .adjust,
 .lock {
   font-size: 2rem;
